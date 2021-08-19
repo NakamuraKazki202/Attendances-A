@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
   get '/signup', to: 'users#new'
-
+  get '/login', to: 'static_pages#login'
+  
   # ログイン機能
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
@@ -11,7 +12,9 @@ Rails.application.routes.draw do
     member do
       get 'edit_basic_info'
       patch 'update_basic_info'
+      get 'attendances/edit_one_month'
+      patch 'attendances/update_one_month' # この行が追加対象です。
     end
-    resources :attendances, only: :update # この行を追加します。
+    resources :attendances, only: :update
   end
 end
