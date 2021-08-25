@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   
   # ログイン機能
   get    '/login', to: 'sessions#new'
-  get    '/login' , to: 'sessions#login'
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
