@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(version: 20210818012353) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-<<<<<<< HEAD
+
     t.datetime "basic_time", default: "2021-09-01 23:00:00"
     t.datetime "work_time", default: "2021-09-01 22:30:00"
-=======
+
     t.datetime "basic_time", default: "2021-08-29 23:00:00"
     t.datetime "work_time", default: "2021-08-29 22:30:00"
->>>>>>> 9d812533c877287441fc36e86a26d2c022e2f027
+    t.datetime "basic_time", default: "2021-08-29 23:00:00"
+    t.datetime "work_time", default: "2021-08-29 22:30:00"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
