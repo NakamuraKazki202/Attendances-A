@@ -5,9 +5,9 @@
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "トップへ", current_user %></li>
         <% if logged_in? %>
-          <% if current_user.admin? %>
-            <li><%= link_to "ユーザー一覧", users_path %></li>
-          <% end %> 
+
+          <li><%= link_to "ユーザー一覧", users_path %></li>
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               アカウント <b class="caret"></b>
@@ -16,10 +16,12 @@
               <li><%= link_to "勤怠の編集", current_user %></li>
               <li><%= link_to "情報の更新", edit_user_path(current_user) %></li>
               <li class="divider"></li>
-              <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
+              <li>
+                <%= link_to "ログアウト", logout_path, method: :delete %>
+              </li>
             </ul>
           </li>
-          <% else %>
+        <% else %>
           <li><%= link_to "ログイン", login_path %></li>
         <% end %>
       </ul>
