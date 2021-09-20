@@ -32,15 +32,25 @@ class AttendancesController < ApplicationController
   def update_one_month
     ActiveRecord::Base.transaction do # トランザクションを開始します。
       attendances_params.each do |id, item|
-        attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+        unless item[:started_at].blank? && item[:finished_at].blank?
+          if item[:started_at].present? && item[:finished_at].blank?
+            flash[:danger] = "退勤時刻が未入力の為、更新をキャンセルしました。"
+            redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return
+          elsif item[:started_at].blank? && item[:finished_at].present?
+            flash[:danger] = "出勤時刻が未入力の為、更新をキャンセルしました。"
+            redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return           
+          elsif item[:started_at].present? && item[:finished_at].present?
+            attendance = Attendance.find(id)
+            attendance.update_attributes!(item)
+          end
+        end  
       end
     end
     flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
     redirect_to user_url(date: params[:date])
   rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to attendances_edit_one_month_user_url(date: params[:date])
+    redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return
   end
 
   private
@@ -50,14 +60,4 @@ class AttendancesController < ApplicationController
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
     end
 
-    # beforeフィルター
-
-    # 管理権限者、または現在ログインしているユーザーを許可します。
-    def admin_or_correct_user
-      @user = User.find(params[:user_id]) if @user.blank?
-      unless current_user?(@user) || current_user.admin?
-        flash[:danger] = "編集権限がありません。"
-        redirect_to(root_url)
-      end  
-    end
-end
+end  
