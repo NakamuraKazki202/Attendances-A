@@ -23,5 +23,8 @@ test:
 production:
   <<: *default
   adapter: postgresql
+<<<<<<< HEAD
   encoding: unicode
   pool: 5
+=======
+>>>>>>> attendances-B
