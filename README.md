@@ -7,4 +7,4 @@
 * Visual Studio.Code
 * Ruby
 * Rails
-* Git
+* Git(HTTPSからSSH通信へ変更)
